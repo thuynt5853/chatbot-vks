@@ -1,0 +1,26 @@
+
+services:
+  rasa:
+    image: thuynt1402/bm_chat:latest
+    ports:
+      - "5010:5005"
+    volumes:
+      - ./:/app                              #Mount cả thư mục
+      - ./config.yml:/app/config.yml       # Mount file config.yml
+      - ./data:/app/data
+      - ./models:/app/models
+    command: ["run", "--enable-api", "--debug", "--cors", "*"]
+    depends_on:
+      - action_server
+
+  action_server:
+    image: thuynt1402/actions_chat:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5055:5055"
+    volumes:
+      - ./actions:/app/actions
+    command: [ "start", "--debug" ]
+    restart: always

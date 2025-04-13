@@ -1,0 +1,18 @@
+# Rasa
+models/
+*.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Docker
+*.pid
+*.sock
+
+# Secrets
+.env
+
+# IDE
+.vscode/
+.idea/
