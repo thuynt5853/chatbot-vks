@@ -1,5 +1,5 @@
 # Rasa
-models/
+rasa/models/
 *.db
 
 # Python
