@@ -33,10 +33,11 @@ nlu:
 
 - intent: ask_weather
   examples: |
-    - How is the weather
-    - Can you tell me about the weather
+    - Thời tiết thế nào
+    - Bạn có thể dự báo thời tiết không?
     - Tell me the weather
-    - What's the weather like?
+    - Trời có đẹp không?
+    - Có nóng không
 
 
 

@@ -1,2 +1,4 @@
-rasa-sdk
-requests
+rasa-sdk           # Phù hợp với Rasa Core 3.6.10
+requests>=2.28,<3.0        # Gọi API ngoài
+jsons>=1.6,<2.0            # Xử lý JSON nâng cao (optional)
+#gradio>=4.9.0,<5.0           # Tạo UI demo tach ra

@@ -1,9 +1,9 @@
 
 services:
-  rasa:
-    image: thuynt1402/bm_chat:latest
+  rasa_core:
+    image: rasa/rasa:3.6.10
     ports:
-      - "5010:5005"
+      - "5005:5005"
     volumes:
       - ./rasa/:/app                              #Mount cả thư mục
       - ./rasa/config.yml:/app/config.yml       # Mount file config.yml
@@ -12,15 +12,40 @@ services:
     command: ["run", "--enable-api", "--debug", "--cors", "*"]
     depends_on:
       - action_server
+    networks:
+      - rasa_network
+    environment:
+        - ACTION_ENDPOINT=http://action_server:5055/webhook
 
   action_server:
-    image: thuynt1402/actions_chat:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: actions/Dockerfile
     ports:
       - "5055:5055"
     volumes:
       - ./actions:/app/actions
-    command: [ "start", "--debug" ]
-    restart: always
+    entrypoint: [ ]  # <--- XÓA entrypoint mặc định
+    command: python -m rasa_sdk.endpoint --actions actions
+
+    environment:
+      - RASA_URL=http://rasa_core:5005/webhooks/rest/webhook  # Cấu hình kết nối đúng
+    networks:
+      - rasa_network
+
+  gradio_ui:
+    build:
+      context: .
+      dockerfile: gradio_ui/Dockerfile.gradio
+    volumes:
+      - ./gradio_ui/chatbot_gradio.py:/app/chatbot_gradio.py
+    ports:
+      - "7860:7860"
+    networks:
+      - rasa_network
+    depends_on:
+      - rasa_core
+
+networks:
+  rasa_network:
+    driver: bridge

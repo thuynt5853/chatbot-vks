@@ -8,7 +8,7 @@ assistant_id: 20230808-134832-moist-radiation
 
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
-language: en
+language: vn
 
 #pipeline:
 #   - name: WhitespaceTokenizer
